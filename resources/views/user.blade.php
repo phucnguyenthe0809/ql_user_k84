@@ -8,7 +8,7 @@
             <div class="col-xl-12">
                
                 <div class="card sameheight-item items" data-exclude="xs,sm,lg">
-                    <form action="" method="post">
+                    <form method="get">
                         <div class="card-header bordered">
                             <div class="header-block">
                                 <h3 class="title"> Danh sách thành viên </h3>
@@ -16,7 +16,7 @@
                             </div>
                             <div class="header-block pull-right">
                                 <label class="search">
-                                    <input class="search-input" name="search" placeholder="search...">
+                                    <input class="search-input" name="search" placeholder="search..." value="{{ request()->search }}">
                                     <i class="fa fa-search search-icon"></i>
                                 </label>
                              
@@ -92,7 +92,10 @@
 
         <div align='right'>
             <nav aria-label="Page navigation example">
-              {{ $users->links() }}
+                @php
+                    $keyword= request()->search;
+                @endphp
+              {{ $users->appends(['search' =>$keyword])->links() }}
             </nav>
         </div>
 

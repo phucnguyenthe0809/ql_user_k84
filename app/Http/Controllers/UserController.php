@@ -7,11 +7,20 @@ use App\Http\Requests\{AddUserRequest,EditUserRequest};
 use App\Models\Users;
 class UserController extends Controller
 {
-    function getUser() {
+    function getUser(request $r) {
     //   hiển thị view 
     //  phải tồn tại view trong file views
         //lệnh render view ra màn hình
-        $data['users']=Users::paginate(10);
+        if($r->has('search'))
+        {
+
+            $keyWord=$r->search;
+            $data['users']=Users::where('full','like','%'.$keyWord.'%')->paginate(10);
+        }
+        else {
+            $data['users']=Users::paginate(10);
+        }
+       
         return view('user',$data);
     }
 
